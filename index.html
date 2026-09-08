@@ -56,8 +56,7 @@
     background:var(--surface);border:1px solid rgba(255,255,255,.08);
     box-shadow:0 30px 70px -20px rgba(0,0,0,.7);
   }
-  .video-ratio{position:relative;width:100%;padding-top:177.78%;/* 9:16 vertical */}
-  .video-ratio > *{position:absolute;inset:0;width:100%;height:100%;}
+  .video-ratio{width:100%;}
   .video-placeholder{
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
     color:var(--muted);font-size:12.5px;text-align:center;padding:20px;
@@ -90,6 +89,18 @@
     .hero h1{font-size:1.75rem;}
   }
 </style>
+<style>
+  .oferta-escondida{display:none;}
+  .offer{text-align:center;padding:20px 18px 10px;}
+  .offer h2{font-size:1.1rem;line-height:1.4;margin:0 0 8px;}
+  .offer .price{font-size:2rem;color:#fff;margin:8px 0 18px;font-weight:700;}
+  .offer .price small{display:block;font-size:.875rem;color:#b7b7c3;font-weight:400;margin-top:4px;}
+  .buy-button{display:block;width:100%;padding:18px 20px;border:0;border-radius:14px;background:linear-gradient(110deg,#22c55e,#4ade80);color:#052e16;font:700 1rem/1.4 Inter,system-ui,sans-serif;text-align:center;text-decoration:none;animation:buy-pulse 1.8s ease-out infinite;cursor:pointer;}
+  .buy-button:focus-visible{outline:3px solid white;outline-offset:5px;}
+  .offer-note{color:#b7b7c3;font-size:.875rem;line-height:1.5;}
+  @keyframes buy-pulse{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,.4);transform:scale(1);}50%{box-shadow:0 0 0 9px rgba(34,197,94,0);transform:scale(1.015);}}
+  @media(prefers-reduced-motion:reduce){.buy-button,.dot{animation:none;}}
+</style>
 </head>
 <body>
 
@@ -105,39 +116,60 @@
   <div class="wrap video-wrap">
     <div class="video-box">
       <div class="video-ratio">
-        <!--
-          ======================================================
-          COLE AQUI O CÓDIGO DE EMBED DO VTURB (vertical, 9:16)
-          O botão de oferta fica configurado DENTRO do próprio
-          player do VTurb (aparece no timestamp que você escolher
-          lá no painel dele), então esta página não precisa de
-          nenhum botão de oferta separado.
-          ======================================================
-        -->
-        <div class="video-placeholder">
-          <b>▶ Vídeo entra aqui</b>
-          Cole o embed do VTurb (vertical) neste lugar.
-        </div>
+        <vturb-smartplayer id="vid-6a9f6978dbdf5d9443cff812" style="display:block;margin:0 auto;width:100%;max-width:400px;">
+          <div class="vturb-player-placeholder" style="position:relative;width:100%;padding:179.07407407407408% 0 0;z-index:0;background-color:black;"></div>
+        </vturb-smartplayer>
       </div>
     </div>
   </div>
 
-  <div class="wrap fallback">
-    <!--
-      Fallback: só existe caso o botão do VTurb não apareça pra
-      alguém (bloqueador de script, navegador antigo, etc).
-      Troque o href pelo link de checkout do upsell na Cakto.
-    -->
-    <a href="#" class="btn">Quero Garantir Minha Vaga</a>
-    <p>Se o vídeo não carregar, o link acima leva direto pra oferta.</p>
-    <div class="dev-note">
-      <b>Nota (tira antes de publicar):</b> 1) cole o embed vertical do VTurb no lugar do placeholder; 2) dentro do painel do VTurb, configure o botão de CTA pra aparecer no timestamp certo, apontando pro checkout de upsell da Cakto; 3) troca o href do botão fallback acima pelo mesmo link, só por garantia.
-    </div>
-  </div>
+  <section id="oferta-sessao" class="wrap offer oferta-escondida" aria-labelledby="offer-title">
+    <h2 id="offer-title">Sessão Estratégica<br>Decoradora no Controle</h2>
+    <p class="price">R$147 <small>Pagamento único</small></p>
+    <a id="buy-button" class="buy-button" role="link" tabindex="0" aria-disabled="true">QUERO GARANTIR MINHA SESSÃO</a>
+    <p class="offer-note">Sessão individual de até 1h30 + acompanhamento até a primeira campanha entrar no ar.</p>
+    <p id="checkout-status" class="offer-note" role="status"></p>
+  </section>
 
   <footer>
     <a href="https://painel.appdecore.com.br">Pular e ir direto para o app</a>
   </footer>
 
+<script>
+  // PENDÊNCIA: preencher o link de pagamento. Revelação de R$147 aos 6min36s.
+  // null mantém a oferta escondida. Não é um cronômetro de tempo na página.
+  const CHECKOUT_URL = "";
+  const PITCH_SECONDS = 396;
+  const player = document.getElementById("vid-6a9f6978dbdf5d9443cff812");
+  const buyButton = document.getElementById("buy-button");
+  let validCheckout = false;
+  try {
+    const url = new URL(CHECKOUT_URL);
+    if (url.protocol === "https:") {
+      validCheckout = true;
+      buyButton.href = url.href;
+      buyButton.removeAttribute("aria-disabled");
+    }
+  } catch (_) { /* Link ainda não fornecido. */ }
+  function missingCheckout(event) {
+    if (validCheckout) return;
+    event.preventDefault();
+    document.getElementById("checkout-status").textContent = "O link de pagamento ainda não está disponível.";
+  }
+  buyButton.addEventListener("click", missingCheckout);
+  buyButton.addEventListener("keydown", function(event) {
+    if (event.key === "Enter" && !validCheckout) missingCheckout(event);
+  });
+  player.addEventListener("player:ready", function() {
+    if (Number.isFinite(PITCH_SECONDS) && PITCH_SECONDS >= 0) {
+      player.displayHiddenElements(PITCH_SECONDS, [".oferta-escondida"], {persist:true});
+    }
+  }, {once:true});
+  // Alternativa: no VTurb, usar Mostrar Conteúdo Oculto com #oferta-sessao.
+  const s = document.createElement("script");
+  s.src = "https://scripts.converteai.net/be28a632-e8a1-4f5e-9674-b5bced476446/players/6a9f6978dbdf5d9443cff812/v4/player.js";
+  s.async = true;
+  document.head.appendChild(s);
+</script>
 </body>
 </html>

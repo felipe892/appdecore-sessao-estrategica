@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Sua assinatura foi confirmada</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" />
+<style>
+  :root{
+    --ink:#0B0B10;
+    --surface:#16161D;
+    --gold:#E8B15C;
+    --gold-2:#C98A2E;
+    --cream:#F4F1EA;
+    --muted:#8B8B99;
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--cream);
+    font-family:'Inter',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    display:flex;flex-direction:column;
+    min-height:100dvh;
+  }
+  .display{font-family:'Space Grotesk',sans-serif;}
+  .wrap{max-width:480px;margin:0 auto;padding:0 18px;width:100%;}
+
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:7px;
+    color:var(--gold);font-weight:700;font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+  }
+  .dot{width:6px;height:6px;border-radius:999px;background:var(--gold);animation:pulse 1.6s infinite;}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+  header{padding:22px 0 6px;text-align:center;}
+
+  .hero{padding:8px 0 14px;text-align:center;}
+  .hero h1{
+    font-size:1.5rem;line-height:1.25;font-weight:700;margin:10px 0 8px;
+    color:#fff;
+  }
+  .hero h1 .accent{color:var(--gold);}
+  .hero p.sub{color:var(--muted);font-size:.92rem;line-height:1.5;max-width:420px;margin:0 auto;}
+
+  /* vídeo — vertical, ocupa o centro da tela */
+  .video-wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:14px 0 10px;}
+  .video-box{
+    width:100%;max-width:420px;margin:0 auto;
+    border-radius:20px;overflow:hidden;
+    background:var(--surface);border:1px solid rgba(255,255,255,.08);
+    box-shadow:0 30px 70px -20px rgba(0,0,0,.7);
+  }
+  .video-ratio{position:relative;width:100%;padding-top:177.78%;/* 9:16 vertical */}
+  .video-ratio > *{position:absolute;inset:0;width:100%;height:100%;}
+  .video-placeholder{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+    color:var(--muted);font-size:12.5px;text-align:center;padding:20px;
+  }
+  .video-placeholder b{color:var(--cream);font-size:13.5px;}
+
+  /* fallback — só aparece se o botão do VTurb não disparar (ex: JS bloqueado) */
+  .fallback{
+    text-align:center;padding:14px 0 6px;
+  }
+  .fallback a.btn{
+    display:inline-block;
+    background:linear-gradient(90deg,var(--gold-2),var(--gold));
+    color:#1A1205;font-weight:700;font-size:.95rem;
+    padding:15px 28px;border-radius:14px;text-decoration:none;
+  }
+  .fallback p{color:var(--muted);font-size:.78rem;margin:10px 0 0;}
+
+  footer{padding:16px 0 24px;text-align:center;}
+  footer a{color:var(--muted);font-size:.82rem;text-decoration:underline;text-underline-offset:3px;}
+
+  .dev-note{
+    background:#3a2a05;border:1px dashed #C99A2E;color:#F2D68A;
+    border-radius:12px;padding:12px 14px;font-size:.78rem;line-height:1.5;margin:16px 0 0;
+    text-align:left;
+  }
+  .dev-note b{color:#FFE7A8;}
+
+  @media(min-width:700px){
+    .hero h1{font-size:1.75rem;}
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <span class="eyebrow"><span class="dot"></span> Disponível só nesta página</span>
+  </header>
+
+  <div class="wrap hero">
+    <h1>Parabéns pela sua assinatura!<br/><span class="accent">Antes de acessar o app</span>, um convite rápido.</h1>
+    <p class="sub">Assiste até o final — no meio do vídeo eu te conto sobre o segundo passo pra encher sua agenda de cliente.</p>
+  </div>
+
+  <div class="wrap video-wrap">
+    <div class="video-box">
+      <div class="video-ratio">
+        <!--
+          ======================================================
+          COLE AQUI O CÓDIGO DE EMBED DO VTURB (vertical, 9:16)
+          O botão de oferta fica configurado DENTRO do próprio
+          player do VTurb (aparece no timestamp que você escolher
+          lá no painel dele), então esta página não precisa de
+          nenhum botão de oferta separado.
+          ======================================================
+        -->
+        <div class="video-placeholder">
+          <b>▶ Vídeo entra aqui</b>
+          Cole o embed do VTurb (vertical) neste lugar.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap fallback">
+    <!--
+      Fallback: só existe caso o botão do VTurb não apareça pra
+      alguém (bloqueador de script, navegador antigo, etc).
+      Troque o href pelo link de checkout do upsell na Cakto.
+    -->
+    <a href="#" class="btn">Quero Garantir Minha Vaga</a>
+    <p>Se o vídeo não carregar, o link acima leva direto pra oferta.</p>
+    <div class="dev-note">
+      <b>Nota (tira antes de publicar):</b> 1) cole o embed vertical do VTurb no lugar do placeholder; 2) dentro do painel do VTurb, configure o botão de CTA pra aparecer no timestamp certo, apontando pro checkout de upsell da Cakto; 3) troca o href do botão fallback acima pelo mesmo link, só por garantia.
+    </div>
+  </div>
+
+  <footer>
+    <a href="https://painel.appdecore.com.br">Pular e ir direto para o app</a>
+  </footer>
+
+</body>
+</html>

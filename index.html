@@ -28,120 +28,108 @@
     display:flex;flex-direction:column;
     min-height:100dvh;
   }
-  .display{font-family:'Space Grotesk',sans-serif;}
   .wrap{max-width:480px;margin:0 auto;padding:0 18px;width:100%;}
 
+  header{padding:20px 0 4px;text-align:center;}
+  .confirm{
+    display:inline-flex;align-items:center;gap:7px;
+    background:rgba(34,197,94,.12);color:#4ade80;
+    font-weight:600;font-size:12px;padding:6px 12px;border-radius:999px;
+  }
+
+  .hero{padding:12px 0 6px;text-align:center;}
   .eyebrow{
     display:inline-flex;align-items:center;gap:7px;
     color:var(--gold);font-weight:700;font-size:11px;letter-spacing:.06em;text-transform:uppercase;
   }
   .dot{width:6px;height:6px;border-radius:999px;background:var(--gold);animation:pulse 1.6s infinite;}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-
-  header{padding:22px 0 6px;text-align:center;}
-
-  .hero{padding:8px 0 14px;text-align:center;}
   .hero h1{
-    font-size:1.5rem;line-height:1.25;font-weight:700;margin:10px 0 8px;
-    color:#fff;
+    font-family:'Space Grotesk',sans-serif;
+    font-size:1.75rem;line-height:1.15;font-weight:700;margin:10px 0 8px;
+    color:#fff;letter-spacing:-.01em;
   }
   .hero h1 .accent{color:var(--gold);}
-  .hero p.sub{color:var(--muted);font-size:.92rem;line-height:1.5;max-width:420px;margin:0 auto;}
+  .hero p.sub{color:var(--muted);font-size:.92rem;line-height:1.5;max-width:400px;margin:0 auto;}
 
-  /* vídeo — vertical, ocupa o centro da tela */
-  .video-wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:14px 0 10px;}
+  /* vídeo curto (anúncio), vertical */
+  .video-wrap{display:flex;justify-content:center;padding:12px 0 6px;}
   .video-box{
-    width:100%;max-width:420px;margin:0 auto;
+    width:100%;max-width:360px;margin:0 auto;
     border-radius:20px;overflow:hidden;
     background:var(--surface);border:1px solid rgba(255,255,255,.08);
     box-shadow:0 30px 70px -20px rgba(0,0,0,.7);
   }
-  .video-ratio{width:100%;}
   .video-placeholder{
-    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+    aspect-ratio:9/16;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
     color:var(--muted);font-size:12.5px;text-align:center;padding:20px;
   }
   .video-placeholder b{color:var(--cream);font-size:13.5px;}
 
-  /* fallback — só aparece se o botão do VTurb não disparar (ex: JS bloqueado) */
-  .fallback{
-    text-align:center;padding:14px 0 6px;
-  }
-  .fallback a.btn{
-    display:inline-block;
-    background:linear-gradient(90deg,var(--gold-2),var(--gold));
-    color:#1A1205;font-weight:700;font-size:.95rem;
-    padding:15px 28px;border-radius:14px;text-decoration:none;
-  }
-  .fallback p{color:var(--muted);font-size:.78rem;margin:10px 0 0;}
+  /* oferta — escondida até o momento certo do vídeo */
+  .oferta-escondida{display:none;}
+  .offer{text-align:center;padding:14px 18px 6px;}
+  .offer .price{font-size:2rem;color:#fff;margin:4px 0 14px;font-weight:700;font-family:'Space Grotesk',sans-serif;}
+  .offer .price small{display:block;font-size:.85rem;color:#b7b7c3;font-weight:400;margin-top:2px;font-family:'Inter',sans-serif;}
+  .buy-button{display:block;width:100%;padding:18px 20px;border:0;border-radius:14px;background:linear-gradient(110deg,#22c55e,#4ade80);color:#052e16;font:700 1.02rem/1.4 Inter,system-ui,sans-serif;text-align:center;text-decoration:none;animation:buy-pulse 1.8s ease-out infinite;cursor:pointer;}
+  .buy-button:focus-visible{outline:3px solid white;outline-offset:5px;}
+  .offer-note{color:#b7b7c3;font-size:.85rem;line-height:1.5;margin:10px 0 0;}
+  @keyframes buy-pulse{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,.4);transform:scale(1);}50%{box-shadow:0 0 0 9px rgba(34,197,94,0);transform:scale(1.015);}}
+  .offer.revealed{animation:rise .45s ease-out both;}
+  @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 
-  footer{padding:16px 0 24px;text-align:center;}
+  footer{padding:16px 0 24px;text-align:center;margin-top:auto;}
   footer a{color:var(--muted);font-size:.82rem;text-decoration:underline;text-underline-offset:3px;}
 
-  .dev-note{
-    background:#3a2a05;border:1px dashed #C99A2E;color:#F2D68A;
-    border-radius:12px;padding:12px 14px;font-size:.78rem;line-height:1.5;margin:16px 0 0;
-    text-align:left;
-  }
-  .dev-note b{color:#FFE7A8;}
-
-  @media(min-width:700px){
-    .hero h1{font-size:1.75rem;}
-  }
-</style>
-<style>
-  .oferta-escondida{display:none;}
-  .offer{text-align:center;padding:20px 18px 10px;}
-  .offer h2{font-size:1.1rem;line-height:1.4;margin:0 0 8px;}
-  .offer .price{font-size:2rem;color:#fff;margin:8px 0 18px;font-weight:700;}
-  .offer .price small{display:block;font-size:.875rem;color:#b7b7c3;font-weight:400;margin-top:4px;}
-  .buy-button{display:block;width:100%;padding:18px 20px;border:0;border-radius:14px;background:linear-gradient(110deg,#22c55e,#4ade80);color:#052e16;font:700 1rem/1.4 Inter,system-ui,sans-serif;text-align:center;text-decoration:none;animation:buy-pulse 1.8s ease-out infinite;cursor:pointer;}
-  .buy-button:focus-visible{outline:3px solid white;outline-offset:5px;}
-  .offer-note{color:#b7b7c3;font-size:.875rem;line-height:1.5;}
-  @keyframes buy-pulse{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,.4);transform:scale(1);}50%{box-shadow:0 0 0 9px rgba(34,197,94,0);transform:scale(1.015);}}
-  @media(prefers-reduced-motion:reduce){.buy-button,.dot{animation:none;}}
+  @media(min-width:700px){ .hero h1{font-size:2.05rem;} }
+  @media(prefers-reduced-motion:reduce){.buy-button,.dot,.offer.revealed{animation:none;}}
 </style>
 </head>
 <body>
 
   <header>
-    <span class="eyebrow"><span class="dot"></span> Disponível só nesta página</span>
+    <span class="confirm">✓ Assinatura confirmada</span>
   </header>
 
   <div class="wrap hero">
-    <h1>Parabéns pela sua assinatura!<br/><span class="accent">Antes de acessar o app</span>, um convite rápido.</h1>
-    <p class="sub">Assiste até o final — no meio do vídeo eu te conto sobre o segundo passo pra encher sua agenda de cliente.</p>
+    <span class="eyebrow"><span class="dot"></span> Oferta só nesta página</span>
+    <h1>E se <span class="accent">você virasse um desenho animado</span> que vende suas festas por você?</h1>
+    <p class="sub">Assiste esse vídeo rapidinho antes de entrar no app.</p>
   </div>
 
   <div class="wrap video-wrap">
-    <div class="video-box">
-      <div class="video-ratio">
-        <vturb-smartplayer id="vid-6a9f6978dbdf5d9443cff812" style="display:block;margin:0 auto;width:100%;max-width:400px;">
-          <div class="vturb-player-placeholder" style="position:relative;width:100%;padding:179.07407407407408% 0 0;z-index:0;background-color:black;"></div>
-        </vturb-smartplayer>
-      </div>
+    <div class="video-box" id="video-slot">
+      <vturb-smartplayer id="vid-6ac16c33bfdc66ea4ac33a1e" style="display:block;margin:0 auto;width:100%;max-width:400px;">
+        <div class="vturb-player-placeholder" style="position:relative;width:100%;padding:177.77777777777777% 0 0;z-index:0;background-color:black;"></div>
+      </vturb-smartplayer>
     </div>
   </div>
 
-  <section id="oferta-sessao" class="wrap offer oferta-escondida" aria-labelledby="offer-title">
-    <h2 id="offer-title">Sessão Estratégica<br>Decoradora no Controle</h2>
-    <p class="price">R$147 <small>Pagamento único</small></p>
-    <a id="buy-button" class="buy-button" role="link" tabindex="0" aria-disabled="true">QUERO GARANTIR MINHA SESSÃO</a>
-    <p class="offer-note">Sessão individual de até 1h30 + acompanhamento até a primeira campanha entrar no ar.</p>
+  <section id="oferta-caricatura" class="wrap offer oferta-escondida" aria-labelledby="offer-title">
+    <h2 id="offer-title" hidden>Sua caricatura animada</h2>
+    <p class="price"><span id="offer-price">R$ 69</span> <small>Pagamento único</small></p>
+    <a id="buy-button" class="buy-button" role="link" tabindex="0" aria-disabled="true">QUERO MEU VÍDEO PERSONALIZADO</a>
+    <p class="offer-note">Seu vídeo personalizado, pronto pra postar no Instagram e usar nos anúncios.</p>
     <p id="checkout-status" class="offer-note" role="status"></p>
   </section>
 
   <footer>
-    <a href="https://painel.appdecore.com.br">Pular e ir direto para o app</a>
+    <a href="https://painel.appdecore.com.br">Não quero, ir direto para o app</a>
   </footer>
 
 <script>
-  // Link de pagamento da sessão. Revelação de R$147 aos 6min36s.
-  // null mantém a oferta escondida. Não é um cronômetro de tempo na página.
-  const CHECKOUT_URL = "https://pay.cakto.com.br/t3jxvhd_1093165";
-  const PITCH_SECONDS = 396;
-  const player = document.getElementById("vid-6a9f6978dbdf5d9443cff812");
+  // ===== CONFIGURAÇÃO — upsell caricatura animada =====
+  const CHECKOUT_URL   = "https://pay.cakto.com.br/kyrpcb5_1169548";   // link do checkout da Cakto (https://pay.cakto.com.br/...)
+  const PRICE_LABEL    = "R$ 69";   // ex: "R$ 97"
+  const VTURB_PLAYER_ID = "6ac16c33bfdc66ea4ac33a1e";  // id do player VTurb do anúncio (ex: 6a9f...)
+  const REVEAL_SECONDS = 42;    // segundo do vídeo em que o botão aparece
+  const VTURB_ACCOUNT  = "be28a632-e8a1-4f5e-9674-b5bced476446";
+  // =============================================================
+
+  const offer = document.getElementById("oferta-caricatura");
   const buyButton = document.getElementById("buy-button");
+  if (PRICE_LABEL) document.getElementById("offer-price").textContent = PRICE_LABEL;
+
   let validCheckout = false;
   try {
     const url = new URL(CHECKOUT_URL);
@@ -160,16 +148,31 @@
   buyButton.addEventListener("keydown", function(event) {
     if (event.key === "Enter" && !validCheckout) missingCheckout(event);
   });
-  player.addEventListener("player:ready", function() {
-    if (Number.isFinite(PITCH_SECONDS) && PITCH_SECONDS >= 0) {
-      player.displayHiddenElements(PITCH_SECONDS, [".oferta-escondida"], {persist:true});
-    }
-  }, {once:true});
-  // Alternativa: no VTurb, usar Mostrar Conteúdo Oculto com #oferta-sessao.
-  const s = document.createElement("script");
-  s.src = "https://scripts.converteai.net/be28a632-e8a1-4f5e-9674-b5bced476446/players/6a9f6978dbdf5d9443cff812/v4/player.js";
-  s.async = true;
-  document.head.appendChild(s);
+
+  function revealOffer() {
+    if (!offer.classList.contains("oferta-escondida")) return;
+    offer.classList.remove("oferta-escondida");
+    offer.classList.add("revealed");
+  }
+
+  const player = document.getElementById("vid-" + VTURB_PLAYER_ID);
+  if (player) {
+    player.addEventListener("player:ready", function() {
+      player.displayHiddenElements(REVEAL_SECONDS, [".oferta-escondida"], {persist:true});
+      // garante a animação de entrada quando o VTurb revelar
+      const obs = new MutationObserver(function() {
+        if (getComputedStyle(offer).display !== "none") { offer.classList.add("revealed"); obs.disconnect(); }
+      });
+      obs.observe(offer, {attributes:true, attributeFilter:["style","class"]});
+    }, {once:true});
+    const s = document.createElement("script");
+    s.src = "https://scripts.converteai.net/" + VTURB_ACCOUNT + "/players/" + VTURB_PLAYER_ID + "/v4/player.js";
+    s.async = true;
+    s.onerror = revealOffer; // se o player não carregar, não deixa a oferta sumida
+    document.head.appendChild(s);
+  } else {
+    revealOffer(); // sem vídeo ainda: mostra a oferta direto (só pra pré-visualizar)
+  }
 </script>
 </body>
 </html>
